@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Steganography Web App</title>
+
+    <!--Link CS-->
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+</head>
+<body>
+    <h1 class="main-title">Steganography Web App</h1>
+
+    <div class="container">
+
+        <!--Encode Section-->
+        <div class="card">
+            <h2>Encode Message</h2>
+            <form action="/encode" method="POST" enctype="multipart/form-data">
+                <input type="file" name="image" accept="image/*" onchange="previewEncode(event)" required>       
+                <img id="encodePreview" class="preview"/>
+                <input type="text" name="message" placeholder="Enter secret message" required>
+                <button type="submit">Encode & Download</button>
+            </form>
+        </div>
+
+        <!--Decode section-->
+        <div class="card">
+            <h2>Decode Message</h2>
+            <form action="/decode" method="POST" enctype="multipart/form-data">
+                <input type="file" name="image" accept="image/*" onchange="previewDecode(event)" required>                
+                <img id="decodePreview" class="preview"/>
+                <button type="submit">Decode Message</button>
+            </form>
+        </div>
+    </div>
+
+    {% if decoded_message %}
+        <div class="result">
+            <h3>Decoded Message:</h3>
+            <p>{{decoded_message }}</p>
+        </div>
+    {% endif %}
+
+    <!--Link JS-->
+    <script src="{{url_for('static', filename='script.js')}}"></script>
+
+</body>
+</html>
+
