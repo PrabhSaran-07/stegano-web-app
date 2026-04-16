@@ -15,7 +15,11 @@
         <div class="card">
             <h2>Encode Message</h2>
             <form action="/encode" method="POST" enctype="multipart/form-data">
-                <input type="file" name="image" accept="image/*" onchange="previewEncode(event)" required>       
+                <label class="file-upload">
+                    Choose Image
+                    <input type="file" name="image" accept="image/*" onchange="previewEncode(event)" required>
+                </label>
+                <span class="file-name">No file chosen</span>  
                 <img id="encodePreview" class="preview"/>
                 <input type="text" name="message" placeholder="Enter secret message" required>
                 <button type="submit">Encode & Download</button>
@@ -26,7 +30,11 @@
         <div class="card">
             <h2>Decode Message</h2>
             <form action="/decode" method="POST" enctype="multipart/form-data">
-                <input type="file" name="image" accept="image/*" onchange="previewDecode(event)" required>                
+                <label class="file-upload">
+                    Choose Image
+                    <input type="file" name="image" accept="image/*" onchange="previewDecode(event)" required>
+                </label>
+                <span class="file-name">No file chosen</span>        
                 <img id="decodePreview" class="preview"/>
                 <button type="submit">Decode Message</button>
             </form>

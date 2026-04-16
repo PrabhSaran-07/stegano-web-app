@@ -25,3 +25,10 @@ function previewDecode(event) {
         reader.readAsDataURL(file);
     }
 }
+
+document.querySelectorAll("input[type='file']"),forEach(input => {
+    input.addEventListener("change", function() {
+        const filename = this.files[0]?.name || "No file chosen";
+        this.parentElement.nextElementSibling.textContent = filename;
+    });
+});
