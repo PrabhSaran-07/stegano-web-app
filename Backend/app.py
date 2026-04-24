@@ -1,3 +1,5 @@
+from detector.lsb_detector import analyze_lsb
+from detector.histogram_detector import analyze_histogram
 from flask import Flask, render_template, request, send_file
 import os
 from encode import encode_message
@@ -56,6 +58,37 @@ def decode():
     message = decode_message(filepath)
     
     return render_template('index.html', decoded_message=message)
+
+#Detect route
+@app.route('/detect', methods=['POST'])
+def detect():
+    if 'image' not in request.files:
+        return "No file uploaded"
+    
+    file = request.files['image']
+    
+    if file.filename == '':
+        return "No selected file"
+    
+    filename = file.filename or "temp.png"
+    filepath = os.path.join(UPLOAD_FOLDER, filename)
+    file.save(filepath)
+    
+    #Run detection
+    lsb_text, lsb_score = analyze_lsb(filepath)
+    hist_text, hist_score = analyze_histogram(filepath)
+    
+    #Final decision
+    final_score = (lsb_score + hist_score) // 2
+    
+    if final_score > 75:
+        final_result = "High Probability of Hidden Data"
+    elif final_score > 50:
+        final_result = "Possible Hidden Data"
+    else:
+        final_result = "Likely Clean Image"
+    
+    return render_template('index.html', lsb_result=lsb_text, hist_result=hist_text, final_result=final_result,confidence=final_score)
 
 if __name__ == '__main__':
     app.run(debug=True)

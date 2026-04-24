@@ -39,12 +39,36 @@
                 <button type="submit">Decode Message</button>
             </form>
         </div>
+
+        <!--Detect section-->
+        <div class="card">
+            <h2>Detect Hidden Data</h2>
+            <form action="/detect" method="POST" enctype="multipart/form-data">
+                <label class="file-upload">
+                    Choose Image
+                    <input type="file" name="image" accept="image/*" onchange="previewDetect(event)" required>
+                </label>
+                <span class="file-name">No file chosen</span>
+                <img id="detectPreview" class="preview"/>
+                <button type="submit">Detect Steganography</button>
+            </form>
+        </div>
     </div>
 
     {% if decoded_message %}
         <div class="result">
             <h3>Decoded Message:</h3>
             <p>{{decoded_message }}</p>
+        </div>
+    {% endif %}
+
+    {% if final_result %}
+        <div class="result">
+            <h3>Detection Results:</h3>
+            <p><b>LSB Analysis:</b> {{ lsb_result }}</p>
+            <p><b>Histogram Analysis:</b> {{ hist_result }}</p>
+            <p><b>Final Verdict:</b> {{ final_result }}</p>
+            <p><b>Confidence Score:</b> {{ confidence }}%</p>
         </div>
     {% endif %}
 
