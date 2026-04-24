@@ -20,13 +20,13 @@ def analyze_lsb(image_path):
     #Calculate difference
     diff = abs(zero_ratio - one_ratio)
     
-    #Confidence logic
-    if diff < 0.01:
+    #Confidence logic or stronger thresholds
+    if diff < 0.005:
         return "Highly Suspicious", 90
-    elif diff < 0.03:
-        return "Moderately Suspicious", 70
-    elif diff <0.05:
-        return "Slightly Suspicious", 50
+    elif diff < 0.015:
+        return "Moderately Suspicious", 65
+    elif diff <0.03:
+        return "Slightly Suspicious", 40
     else:
-        return "Likely Clean Image", 20
+        return "Likely Clean Image", 10
     

@@ -7,9 +7,11 @@ def analyze_histogram(image_path):
     #Simple check: sudden spikes or irregularities
     variation = max(histogram) - min(histogram)
     
-    if variation > 20000:
+    if variation > 30000:
         return "Highly Suspicious", 85
-    elif variation >12000:
-        return "Moderate Variation", 65
+    elif variation >18000:
+        return "Moderate Variation", 60
+    elif variation >10000:
+        return "Slight Variation", 40
     else:
-        return "Normal Histogram", 30
+        return "Normal Histogram", 15
