@@ -78,21 +78,28 @@ def detect():
     lsb_text, lsb_score = analyze_lsb(filepath)
     hist_text, hist_score = analyze_histogram(filepath)
     
-    #Final decision 
-    #weighted scoring
-    final_score = int((lsb_score * 0.7) + hist_score * 0.3)
+    message = decode_message(filepath)
     
-    if lsb_score <30 and hist_score < 50:
-        final_result = "Clean Image"
-        final_score = 10
-    elif final_score > 80:
-        final_result = "High Probability of Hidden Data"
-    elif final_score > 60:
-        final_result = "Possible Hidden Data"
-    elif final_score > 40:
-        final_result = "Low Probability of Hidden Data (Check Recommended)"
+    #Final decision 
+    if message and message != "No hidden message found":
+        final_result = "Hidden Data Confirmed"
+        final_score = 95
+        
+    #weighted scoring
     else:
-        final_result = "Likely Clean Image"
+        final_score = int((lsb_score * 0.7) + hist_score * 0.3)
+    
+        if lsb_score <30 and hist_score < 50:
+            final_result = "Clean Image"
+            final_score = 10
+        elif final_score > 80:
+            final_result = "Suspicious (But not confirmed)"
+        elif final_score > 60:
+            final_result = "Possible Hidden Data"
+        elif final_score > 40:
+            final_result = "Low Probability of Hidden Data (Check Recommended)"
+        else:
+            final_result = "Likely Clean Image"
     
     return render_template('index.html', lsb_result=lsb_text, hist_result=hist_text, final_result=final_result,confidence=final_score)
 
