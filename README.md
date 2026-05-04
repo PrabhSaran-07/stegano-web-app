@@ -50,7 +50,7 @@ stegano-web-app/
   │── decode.js
   │── uploads/
 
-📸 Usage
+Usage
 Encode Message
 Upload an image
 Enter your secret message
