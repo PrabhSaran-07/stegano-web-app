@@ -20,7 +20,7 @@ This tool uses the **Least Significant Bit (LSB)** technique to embed data direc
 ## 🛠️ Tech Stack
 - **Frontend**: HTML5, CSS3 (Glassmorphism), Vanilla JavaScript.
 - **Backend**: Python, Flask.
-- **Image Processing/Analysis**: OpenCV, NumPy, Pillow.
+- **Image Processing/Analysis**: NumPy, Pillow.
 
 ## ⚙️ How It Works
 1. **Encoding**: The user uploads an image and enters a secret message. The message is converted into binary, and the data is hidden inside the least significant bits of the image pixels.
