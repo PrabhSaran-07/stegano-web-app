@@ -1,81 +1,116 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Steganography Web App</title>
-
-    <!--Link CS-->
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS Link -->
     <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
 </head>
 <body>
-    <h1 class="main-title">Steganography Web App</h1>
-
-    <div class="container">
-
-        <!--Encode Section-->
-        <div class="card">
-            <h2>Encode Message</h2>
-            <form action="/encode" method="POST" enctype="multipart/form-data">
-                <label class="file-upload">
-                    Choose Image
-                    <input type="file" name="image" accept="image/*" onchange="previewEncode(event)" required>
-                </label>
-                <span class="file-name">No file chosen</span>  
-                <img id="encodePreview" class="preview"/>
-                <input type="text" name="message" placeholder="Enter secret message" required>
-                <button type="submit">Encode & Download</button>
-            </form>
-        </div>
-
-        <!--Decode section-->
-        <div class="card">
-            <h2>Decode Message</h2>
-            <form action="/decode" method="POST" enctype="multipart/form-data">
-                <label class="file-upload">
-                    Choose Image
-                    <input type="file" name="image" accept="image/*" onchange="previewDecode(event)" required>
-                </label>
-                <span class="file-name">No file chosen</span>        
-                <img id="decodePreview" class="preview"/>
-                <button type="submit">Decode Message</button>
-            </form>
-        </div>
-
-        <!--Detect section-->
-        <div class="card">
-            <h2>Detect Hidden Data</h2>
-            <form action="/detect" method="POST" enctype="multipart/form-data">
-                <label class="file-upload">
-                    Choose Image
-                    <input type="file" name="image" accept="image/*" onchange="previewDetect(event)" required>
-                </label>
-                <span class="file-name">No file chosen</span>
-                <img id="detectPreview" class="preview"/>
-                <button type="submit">Detect Steganography</button>
-            </form>
-        </div>
+    <div class="background-elements">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
     </div>
 
-    {% if decoded_message %}
-        <div class="result">
-            <h3>Decoded Message:</h3>
-            <p>{{decoded_message }}</p>
-        </div>
-    {% endif %}
+    <header>
+        <h1 class="main-title">Steganography Studio</h1>
+        <p class="subtitle">Securely hide and reveal data within images.</p>
+    </header>
 
-    {% if final_result %}
-        <div class="result">
-            <h3>Detection Results:</h3>
-            <p><b>LSB Analysis:</b> {{ lsb_result }}</p>
-            <p><b>Histogram Analysis:</b> {{ hist_result }}</p>
-            <p><b>Final Verdict:</b> {{ final_result }}</p>
-            <p><i>Note: Minor variations may occur in normal image due to noise.</i></p>
-            <p><b>Confidence Score:</b> {{ confidence }}%</p>
-        </div>
-    {% endif %}
+    <main class="container">
+        <!--Encode Section-->
+        <section class="card glass-card">
+            <h2>Encode Message</h2>
+            <form action="/encode" method="POST" enctype="multipart/form-data">
+                <div class="file-upload-wrapper">
+                    <label class="file-upload btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                        Choose Image
+                        <input type="file" name="image" accept="image/*" onchange="previewEncode(event)" required>
+                    </label>
+                    <span class="file-name">No file chosen</span>  
+                </div>
+                <div class="preview-container">
+                    <img id="encodePreview" class="preview"/>
+                </div>
+                <div class="input-group">
+                    <input type="text" name="message" placeholder="Enter secret message" required>
+                </div>
+                <button type="submit" class="btn-primary">Encode & Download</button>
+            </form>
+        </section>
+
+        <!--Decode section-->
+        <section class="card glass-card">
+            <h2>Decode Message</h2>
+            <form action="/decode" method="POST" enctype="multipart/form-data">
+                <div class="file-upload-wrapper">
+                    <label class="file-upload btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                        Choose Image
+                        <input type="file" name="image" accept="image/*" onchange="previewDecode(event)" required>
+                    </label>
+                    <span class="file-name">No file chosen</span>        
+                </div>
+                <div class="preview-container">
+                    <img id="decodePreview" class="preview"/>
+                </div>
+                <button type="submit" class="btn-primary">Decode Message</button>
+            </form>
+        </section>
+
+        <!--Detect section-->
+        <section class="card glass-card">
+            <h2>Detect Hidden Data</h2>
+            <form action="/detect" method="POST" enctype="multipart/form-data">
+                <div class="file-upload-wrapper">
+                    <label class="file-upload btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                        Choose Image
+                        <input type="file" name="image" accept="image/*" onchange="previewDetect(event)" required>
+                    </label>
+                    <span class="file-name">No file chosen</span>
+                </div>
+                <div class="preview-container">
+                    <img id="detectPreview" class="preview"/>
+                </div>
+                <button type="submit" class="btn-primary">Detect Steganography</button>
+            </form>
+        </section>
+    </main>
+
+    <section class="results-section">
+        {% if decoded_message %}
+            <div class="result glass-card fade-in">
+                <h3>Decoded Message</h3>
+                <div class="result-content highlight-box">
+                    <p>{{decoded_message }}</p>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if final_result %}
+            <div class="result glass-card fade-in">
+                <h3>Detection Results</h3>
+                <ul class="result-list">
+                    <li><span>LSB Analysis:</span> <span class="val">{{ lsb_result }}</span></li>
+                    <li><span>Histogram Analysis:</span> <span class="val">{{ hist_result }}</span></li>
+                    <li class="verdict"><span>Final Verdict:</span> <span class="val {% if 'No hidden' in final_result %}safe{% else %}alert{% endif %}">{{ final_result }}</span></li>
+                    <li><span>Confidence Score:</span> <span class="val">{{ confidence }}%</span></li>
+                </ul>
+                <p class="note"><i>Note: Minor variations may occur in normal images due to noise.</i></p>
+            </div>
+        {% endif %}
+    </section>
 
     <!--Link JS-->
     <script src="{{url_for('static', filename='script.js')}}"></script>
-
 </body>
 </html>
-
