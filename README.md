@@ -1,5 +1,7 @@
 # 🕵️‍♂️ Steganography Studio (Web App)
 
+**🚀 Live Demo:** [https://stegano-studio-d3f7.onrender.com/](https://stegano-studio-d3f7.onrender.com/)
+
 A modern, interactive, and beautiful web-based steganography tool that allows users to securely hide, extract, and detect secret messages inside images.
 
 ## 📖 About the Project
