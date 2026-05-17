@@ -85,7 +85,9 @@ header {
     margin-bottom: 10px;
     background: linear-gradient(135deg, #a78bfa, #f472b6);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
+    color: transparent;
     letter-spacing: 1px;
 }
 
